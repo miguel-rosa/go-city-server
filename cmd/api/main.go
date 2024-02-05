@@ -21,12 +21,8 @@ func init() {
 func main() {
 	ctx := context.Background()
 
-	connectionString, exists := os.LookupEnv("DB_CONNECTION_STRING")
+	connectionString := os.Getenv("DB_CONNECTION_STRING")
 
-	if !exists {
-		log.Print("Missing DB_CONNECTION_STRING on env")
-
-	}
 	conn, err := database.NewConnection(ctx, connectionString)
 
 	if err != nil {
