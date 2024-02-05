@@ -13,8 +13,10 @@ import (
 )
 
 func init() {
-	if err := godotenv.Load(); err != nil {
-		log.Print("No .env file found")
+	if _, exists := os.LookupEnv("RAILWAY_ENVIRONMENT"); exists == false {
+		if err := godotenv.Load(); err != nil {
+			log.Print("No .env file found")
+		}
 	}
 }
 
