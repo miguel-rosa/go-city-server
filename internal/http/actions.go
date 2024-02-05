@@ -23,7 +23,7 @@ func Configure() {
 }
 
 func PostPosts(ctx *gin.Context) {
-	var post internal.PostPosts
+	var post internal.Post
 	if err := ctx.BindJSON(&post); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -64,7 +64,7 @@ func GetPost(ctx *gin.Context) {
 		return
 	}
 
-	p, err := service.FindOneBByID(ctx, parsedID)
+	p, err := service.FindOneByID(ctx, parsedID)
 	if err != nil {
 		statusCode := http.StatusInternalServerError
 		if err == post.ErrPostNotFound {

@@ -26,7 +26,7 @@ func (r *RepositoryPostgres) Insert(ctx context.Context, post internal.Post) (in
 		ctx,
 		"INSERT INTO posts (username, body) VALUES ($1, $2) RETURNING id, username, body, created_at",
 		post.Username,
-		post.Body.Scan(&post.ID, &post.Username, &post.Body, &post.CreatedAt))
+		post.Body).Scan(&post.ID, &post.Username, &post.Body, &post.CreatedAt)
 
 	if err != nil {
 		return internal.Post{}, err

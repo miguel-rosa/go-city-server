@@ -2,19 +2,31 @@ package main
 
 import (
 	"context"
-	"items/internal/database"
-	"items/internal/http"
-
-	"github.com/miguel-rosa/go-city-server/inernal/database"
+	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/miguel-rosa/go-city-server/inernal/http"
+	"github.com/joho/godotenv"
+
+	"github.com/miguel-rosa/go-city-server/internal/database"
+	"github.com/miguel-rosa/go-city-server/internal/http"
 )
+
+func init() {
+	if err := godotenv.Load(); err != nil {
+		log.Print("No .env file found")
+	}
+}
 
 func main() {
 	ctx := context.Background()
 
-	connectionString := "postgressql://post:p0stgr3s@db:5432/posts"
+	connectionString, exists := os.LookupEnv("DB_CONNECTION_STRING")
+
+	if !exists {
+		log.Print("Missing DB_CONNECTION_STRING on env")
+
+	}
 	conn, err := database.NewConnection(ctx, connectionString)
 
 	if err != nil {
