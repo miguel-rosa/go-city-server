@@ -20,6 +20,15 @@ func init() {
 	}
 }
 
+func envPortOr(port string) string {
+	// If `PORT` variable in environment exists, return it
+	if envPort := os.Getenv("PORT"); envPort != "" {
+		return ":" + envPort
+	}
+	// Otherwise, return the value of `port` variable from function argument
+	return ":" + port
+}
+
 func main() {
 	ctx := context.Background()
 
@@ -37,5 +46,6 @@ func main() {
 	g.Use(gin.Recovery())
 	http.Configure()
 	http.SetRoutes(g)
-	g.Run(":3000")
+	var port = envPortOr("3000")
+	g.Run(port)
 }
