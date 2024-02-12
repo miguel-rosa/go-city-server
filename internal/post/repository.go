@@ -4,10 +4,9 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/miguel-rosa/go-city-server/internal"
-
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/miguel-rosa/go-city-server/internal"
 )
 
 type Repository interface {
