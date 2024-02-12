@@ -7,9 +7,9 @@ import (
 )
 
 func SetRoutes(g *gin.Engine) {
-	g.POST("/posts", PostPosts)
+	g.GET("/posts", GetAll)
 	g.GET("/posts/:id", GetPost)
-	g.GET("/posts/", GetAll)
+	g.POST("/posts", PostPosts)
 
 	g.GET("/health", func(c *gin.Context) {
 		c.Status(http.StatusOK)
