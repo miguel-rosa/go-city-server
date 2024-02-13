@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,6 +28,7 @@ func SetRoutes(g *gin.Engine) {
 	g.POST("/test", respTest)
 
 	g.GET("/health", func(c *gin.Context) {
+		fmt.Printf("OK!")
 		c.Status(http.StatusOK)
 	})
 }
