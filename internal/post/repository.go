@@ -11,7 +11,7 @@ import (
 
 type Repository interface {
 	Insert(ctx context.Context, post internal.Post) (internal.Post, error)
-	FindAll(ctx context.Context) ([]internal.Post, error)
+	FindAll(ctx context.Context, params internal.Pagination) ([]internal.Post, error)
 	FindOneByID(ctx context.Context, id uuid.UUID) (internal.Post, error)
 }
 
@@ -34,11 +34,12 @@ func (r *RepositoryPostgres) Insert(ctx context.Context, post internal.Post) (in
 	return post, nil
 }
 
-func (r *RepositoryPostgres) FindAll(ctx context.Context) ([]internal.Post, error) {
+func (r *RepositoryPostgres) FindAll(ctx context.Context, params internal.Pagination) ([]internal.Post, error) {
 	rows, err := r.Conn.Query(
 		ctx,
-		"SELECT id, username, body, created_at FROM posts",
-	)
+		"SELECT id, username, body, created_at FROM posts ORDER BY created_at DESC LIMIT $1 OFFSET $2",
+		params.Limit,
+		params.Offset)
 
 	if err != nil {
 		return nil, err

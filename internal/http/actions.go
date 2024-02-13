@@ -83,7 +83,14 @@ func GetAll(ctx *gin.Context) {
 	ctxTimeout, cancel := context.WithTimeout(context.Background(), time.Second*10)
 	defer cancel()
 
-	posts, err := service.FindAll(ctxTimeout)
+	var pagination internal.Pagination
+
+	pagination.Limit = 10
+	pagination.Offset = 0
+
+	ctx.ShouldBindQuery(&pagination)
+
+	posts, err := service.FindAll(ctxTimeout, pagination)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"error": http.StatusText(http.StatusInternalServerError),

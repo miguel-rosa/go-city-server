@@ -14,6 +14,11 @@ type Post struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
+type Pagination struct {
+	Limit  int `form:"limit"`
+	Offset int `form:"offset"`
+}
+
 var (
 	ErrPostBodyExceedsLimit = errors.New("post body exceeds limit")
 	ErrIDEmpty              = errors.New("id empty")

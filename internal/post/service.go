@@ -40,8 +40,8 @@ func (s Service) FindOneByID(ctx context.Context, id uuid.UUID) (internal.Post, 
 	return s.Repository.FindOneByID(ctx, id)
 }
 
-func (s Service) FindAll(ctx context.Context) ([]internal.Post, error) {
-	posts, err := s.Repository.FindAll(ctx)
+func (s Service) FindAll(ctx context.Context, params internal.Pagination) ([]internal.Post, error) {
+	posts, err := s.Repository.FindAll(ctx, params)
 	if err != nil {
 		return nil, err
 	}
